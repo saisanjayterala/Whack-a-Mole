@@ -74,7 +74,11 @@ body {
     background-image: url('golden-mole.png');
 }
 
-#start-button, .difficulty-btn, #play-again, .powerup-btn {
+.bomb {
+    background-image: url('bomb.png');
+}
+
+#start-button, .difficulty-btn, #play-again, .powerup-btn, #continue {
     font-size: 18px;
     padding: 10px 20px;
     background-color: #4CAF50;
@@ -85,7 +89,7 @@ body {
     transition: background-color 0.3s;
 }
 
-#start-button:hover, .difficulty-btn:hover, #play-again:hover, .powerup-btn:hover {
+#start-button:hover, .difficulty-btn:hover, #play-again:hover, .powerup-btn:hover, #continue:hover {
     background-color: #45a049;
 }
 
@@ -131,7 +135,7 @@ body {
     border-radius: 10px;
 }
 
-#play-again {
+#play-again, #continue {
     margin-top: 20px;
 }
 
@@ -154,4 +158,13 @@ body {
 
 .double-points-active {
     background-color: #ffd700;
+}
+
+.combo-multiplier {
+    position: absolute;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff4500;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    pointer-events: none;
 }

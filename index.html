@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whack-a-Mole Extravaganza</title>
+    <title>Whack-a-Mole Ultimate</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="game-wrapper">
-        <h1 class="game-title">Whack-a-Mole Extravaganza</h1>
+        <h1 class="game-title">Whack-a-Mole Ultimate</h1>
         <div class="game-info">
             <div id="score">Score: <span id="score-value">0</span></div>
             <div id="time">Time: <span id="time-value">30</span>s</div>
-            <div id="high-score">High Score: <span id="high-score-value">0</span></div>
+            <div id="level">Level: <span id="level-value">1</span></div>
         </div>
         <div id="game-container">
             <div class="mole-hole" data-index="0"><div class="dirt"></div></div>
@@ -26,6 +26,11 @@
             <div class="mole-hole" data-index="7"><div class="dirt"></div></div>
             <div class="mole-hole" data-index="8"><div class="dirt"></div></div>
         </div>
+        <div id="powerups">
+            <button id="freeze-time" class="powerup-btn" disabled>Freeze Time (<span id="freeze-count">3</span>)</button>
+            <button id="double-points" class="powerup-btn" disabled>Double Points (<span id="double-count">3</span>)</button>
+            <button id="whack-all" class="powerup-btn" disabled>Whack All (<span id="whack-all-count">1</span>)</button>
+        </div>
         <button id="start-button">Start Game</button>
         <div id="difficulty">
             <span>Difficulty:</span>
@@ -33,19 +38,23 @@
             <button class="difficulty-btn" data-difficulty="medium">Medium</button>
             <button class="difficulty-btn" data-difficulty="hard">Hard</button>
         </div>
-        <div id="powerups">
-            <button id="freeze-time" class="powerup-btn" disabled>Freeze Time</button>
-            <button id="double-points" class="powerup-btn" disabled>Double Points</button>
-        </div>
     </div>
     <div id="game-over" class="modal">
         <div class="modal-content">
             <h2>Game Over!</h2>
-            <p>Your score: <span id="final-score"></span></p>
-            <p>High score: <span id="final-high-score"></span></p>
-            <p>Moles whacked: <span id="moles-whacked"></span></p>
+            <p>Final Score: <span id="final-score"></span></p>
+            <p>Highest Level: <span id="highest-level"></span></p>
+            <p>Moles Whacked: <span id="moles-whacked"></span></p>
             <p>Accuracy: <span id="accuracy"></span>%</p>
             <button id="play-again">Play Again</button>
+        </div>
+    </div>
+    <div id="level-up" class="modal">
+        <div class="modal-content">
+            <h2>Level Up!</h2>
+            <p>You've reached Level <span id="new-level"></span></p>
+            <p>Bonus Points: <span id="bonus-points"></span></p>
+            <button id="continue">Continue</button>
         </div>
     </div>
     <script src="script.js"></script>
