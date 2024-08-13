@@ -70,7 +70,11 @@ body {
     cursor: pointer;
 }
 
-#start-button, .difficulty-btn, #play-again {
+.golden-mole {
+    background-image: url('golden-mole.png');
+}
+
+#start-button, .difficulty-btn, #play-again, .powerup-btn {
     font-size: 18px;
     padding: 10px 20px;
     background-color: #4CAF50;
@@ -81,28 +85,28 @@ body {
     transition: background-color 0.3s;
 }
 
-#start-button:hover, .difficulty-btn:hover, #play-again:hover {
+#start-button:hover, .difficulty-btn:hover, #play-again:hover, .powerup-btn:hover {
     background-color: #45a049;
 }
 
-#start-button:disabled, .difficulty-btn:disabled {
+#start-button:disabled, .difficulty-btn:disabled, .powerup-btn:disabled {
     background-color: #ccc;
     cursor: not-allowed;
 }
 
-#difficulty {
+#difficulty, #powerups {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 20px;
 }
 
-#difficulty span {
+#difficulty span, #powerups span {
     margin-right: 10px;
     font-weight: bold;
 }
 
-.difficulty-btn {
+.difficulty-btn, .powerup-btn {
     margin: 0 5px;
 }
 
@@ -142,4 +146,12 @@ body {
 
 .mole.appear {
     animation: mole-appear 0.2s ease-out;
+}
+
+.freeze-active {
+    filter: hue-rotate(180deg);
+}
+
+.double-points-active {
+    background-color: #ffd700;
 }
