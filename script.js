@@ -134,7 +134,7 @@ function startGame() {
     molesWhacked = 0;
     totalClicks = 0;
     combo = 0;
-    freezeCount = 3;
+  freezeCount = 3;
     doubleCount = 3;
     whackAllCount = 1;
     scoreElement.textContent = score;
@@ -196,7 +196,7 @@ function showLevelUpModal(bonusPoints) {
 function hideLevelUpModal() {
     levelUpModal.style.display = 'none';
     gameActive = true;
-    timeLeft += 10; // Add 10 seconds for each level up
+    timeLeft += 10; 
     timeElement.textContent = timeLeft;
     gameInterval = setInterval(updateTime, 1000);
     peep();

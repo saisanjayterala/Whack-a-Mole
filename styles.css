@@ -5,23 +5,27 @@ body {
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+    background: linear-gradient(45deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: #e94560;
 }
 
 .game-wrapper {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.1);
     border-radius: 20px;
     padding: 30px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 20px rgba(233, 69, 96, 0.5);
+    backdrop-filter: blur(10px);
+    max-width: 500px;
+    width: 100%;
 }
 
 .game-title {
-    font-family: 'Bangers', cursive;
-    font-size: 48px;
-    color: #333;
+    font-family: 'Bungee', cursive;
+    font-size: 36px;
+    color: #e94560;
     text-align: center;
     margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .game-info {
@@ -34,68 +38,78 @@ body {
 
 #game-container {
     display: grid;
-    grid-template-columns: repeat(3, 120px);
+    grid-template-columns: repeat(3, 1fr);
     grid-gap: 20px;
     margin-bottom: 30px;
 }
 
 .mole-hole {
-    width: 120px;
-    height: 120px;
-    background-color: #8b4513;
+    width: 100%;
+    padding-bottom: 100%;
+    background-color: #533483;
     border-radius: 50%;
     overflow: hidden;
     position: relative;
     cursor: pointer;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .dirt {
     width: 100%;
-    height: 30px;
-    background-color: #5a3412;
+    height: 30%;
+    background-color: #0f3460;
     position: absolute;
     bottom: 0;
     border-radius: 0 0 50% 50%;
 }
 
 .mole {
-    width: 100px;
-    height: 100px;
+    width: 80%;
+    height: 80%;
     background-image: url('mole.png');
     background-size: cover;
     position: absolute;
-    bottom: 30px;
-    left: 10px;
+    bottom: 30%;
+    left: 10%;
     transition: all 0.1s;
     cursor: pointer;
 }
 
 .golden-mole {
     background-image: url('golden-mole.png');
+    filter: brightness(1.5) saturate(1.5);
 }
 
 .bomb {
     background-image: url('bomb.png');
+    filter: hue-rotate(180deg);
 }
 
 #start-button, .difficulty-btn, #play-again, .powerup-btn, #continue {
     font-size: 18px;
     padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
+    background-color: #e94560;
+    color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
 }
 
 #start-button:hover, .difficulty-btn:hover, #play-again:hover, .powerup-btn:hover, #continue:hover {
-    background-color: #45a049;
+    background-color: #533483;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 #start-button:disabled, .difficulty-btn:disabled, .powerup-btn:disabled {
-    background-color: #ccc;
+    background-color: #555;
     cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
 }
 
 #difficulty, #powerups {
@@ -103,6 +117,7 @@ body {
     justify-content: center;
     align-items: center;
     margin-top: 20px;
+    flex-wrap: wrap;
 }
 
 #difficulty span, #powerups span {
@@ -111,7 +126,7 @@ body {
 }
 
 .difficulty-btn, .powerup-btn {
-    margin: 0 5px;
+    margin: 5px;
 }
 
 .modal {
@@ -122,17 +137,18 @@ body {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0,0,0,0.7);
 }
 
 .modal-content {
-    background-color: #fefefe;
+    background-color: #16213e;
     margin: 15% auto;
     padding: 20px;
-    border: 1px solid #888;
+    border: 1px solid #e94560;
     width: 300px;
     text-align: center;
     border-radius: 10px;
+    box-shadow: 0 0 20px rgba(233, 69, 96, 0.5);
 }
 
 #play-again, #continue {
@@ -164,7 +180,37 @@ body {
     position: absolute;
     font-size: 24px;
     font-weight: bold;
-    color: #ff4500;
+    color: #ffd700;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
     pointer-events: none;
+    animation: float-up 1s ease-out;
+    opacity: 0;
+}
+
+@keyframes float-up {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-50px); opacity: 0; }
+}
+
+.difficulty-btn.active {
+    background-color: #533483;
+}
+
+@media (max-width: 600px) {
+    .game-wrapper {
+        padding: 15px;
+    }
+
+    .game-title {
+        font-size: 28px;
+    }
+
+    #game-container {
+        grid-gap: 10px;
+    }
+
+    .powerup-btn, .difficulty-btn {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
 }
