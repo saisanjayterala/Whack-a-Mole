@@ -17,9 +17,11 @@ const continueButton = document.getElementById('continue');
 const freezeTimeButton = document.getElementById('freeze-time');
 const doublePointsButton = document.getElementById('double-points');
 const whackAllButton = document.getElementById('whack-all');
+const shieldButton = document.getElementById('shield');
 const freezeCountElement = document.getElementById('freeze-count');
 const doubleCountElement = document.getElementById('double-count');
 const whackAllCountElement = document.getElementById('whack-all-count');
+const shieldCountElement = document.getElementById('shield-count');
 
 let score = 0;
 let timeLeft = 30;
@@ -35,11 +37,13 @@ let combo = 0;
 let freezeCount = 3;
 let doubleCount = 3;
 let whackAllCount = 1;
+let shieldCount = 2;
+let isShieldActive = false;
 
 const difficultySettings = {
-    easy: { minPeepTime: 1000, maxPeepTime: 2000, goldenMoleChance: 0.05, bombChance: 0.02 },
-    medium: { minPeepTime: 500, maxPeepTime: 1500, goldenMoleChance: 0.1, bombChance: 0.05 },
-    hard: { minPeepTime: 300, maxPeepTime: 1000, goldenMoleChance: 0.15, bombChance: 0.08 }
+    easy: { minPeepTime: 2000, maxPeepTime: 3000, goldenMoleChance: 0.05, bombChance: 0.02 },
+    medium: { minPeepTime: 1000, maxPeepTime: 2000, goldenMoleChance: 0.1, bombChance: 0.05 },
+    hard: { minPeepTime: 500, maxPeepTime: 1500, goldenMoleChance: 0.15, bombChance: 0.08 }
 };
 
 function randomHole() {
@@ -55,11 +59,17 @@ function peep() {
     const rand = Math.random();
     if (rand < difficultySettings[difficulty].bombChance) {
         mole.classList.add('bomb');
+        mole.innerHTML = '<i class="fas fa-bomb"></i>';
     } else if (rand < difficultySettings[difficulty].goldenMoleChance + difficultySettings[difficulty].bombChance) {
         mole.classList.add('golden-mole');
+        mole.innerHTML = '<i class="fas fa-medal"></i>';
+    } else {
+        mole.innerHTML = '<i class="fas fa-paw"></i>';
     }
     
     hole.appendChild(mole);
+
+    void mole.offsetWidth;
 
     mole.addEventListener('click', whack);
 
@@ -74,12 +84,17 @@ function peep() {
         if (gameActive) peep();
     }, isFrozen ? peepTime * 2 : peepTime);
 }
-
 function whack(e) {
     totalClicks++;
     if (e.target.classList.contains('whacked')) return;
     
     if (e.target.classList.contains('bomb')) {
+        if (isShieldActive) {
+            isShieldActive = false;
+            document.body.classList.remove('shield-active');
+            e.target.remove();
+            return;
+        }
         endGame();
         return;
     }
@@ -134,21 +149,24 @@ function startGame() {
     molesWhacked = 0;
     totalClicks = 0;
     combo = 0;
-  freezeCount = 3;
+    freezeCount = 3;
     doubleCount = 3;
     whackAllCount = 1;
+    shieldCount = 2;
     scoreElement.textContent = score;
     timeElement.textContent = timeLeft;
     levelElement.textContent = level;
     freezeCountElement.textContent = freezeCount;
     doubleCountElement.textContent = doubleCount;
     whackAllCountElement.textContent = whackAllCount;
+    shieldCountElement.textContent = shieldCount;
     gameActive = true;
     startButton.disabled = true;
     difficultyButtons.forEach(btn => btn.disabled = true);
     freezeTimeButton.disabled = false;
     doublePointsButton.disabled = false;
     whackAllButton.disabled = false;
+    shieldButton.disabled = false;
     peep();
     gameInterval = setInterval(updateTime, 1000);
 }
@@ -161,6 +179,7 @@ function endGame() {
     freezeTimeButton.disabled = true;
     doublePointsButton.disabled = true;
     whackAllButton.disabled = true;
+    shieldButton.disabled = true;
     showGameOverModal();
 }
 
@@ -239,6 +258,19 @@ function whackAll() {
     }
 }
 
+function activateShield() {
+    if (!isShieldActive && shieldCount > 0) {
+        isShieldActive = true;
+        shieldCount--;
+        shieldCountElement.textContent = shieldCount;
+        document.body.classList.add('shield-active');
+        setTimeout(() => {
+            isShieldActive = false;
+            document.body.classList.remove('shield-active');
+        }, 10000);
+    }
+}
+
 startButton.addEventListener('click', startGame);
 
 difficultyButtons.forEach(btn => {
@@ -259,5 +291,6 @@ continueButton.addEventListener('click', hideLevelUpModal);
 freezeTimeButton.addEventListener('click', freezeTime);
 doublePointsButton.addEventListener('click', activateDoublePoints);
 whackAllButton.addEventListener('click', whackAll);
+shieldButton.addEventListener('click', activateShield);
 
 document.querySelector('.difficulty-btn[data-difficulty="medium"]').classList.add('active');

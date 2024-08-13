@@ -48,7 +48,7 @@ body {
     padding-bottom: 100%;
     background-color: #533483;
     border-radius: 50%;
-    overflow: hidden;
+    overflow: visible;
     position: relative;
     cursor: pointer;
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
@@ -63,26 +63,31 @@ body {
     border-radius: 0 0 50% 50%;
 }
 
-.mole {
+.mole, .golden-mole, .bomb {
     width: 80%;
     height: 80%;
-    background-image: url('mole.png');
-    background-size: cover;
     position: absolute;
     bottom: 30%;
     left: 10%;
     transition: all 0.1s;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    color: #fff;
 }
 
-.golden-mole {
-    background-image: url('golden-mole.png');
-    filter: brightness(1.5) saturate(1.5);
+.mole i {
+    color: #8B4513;
 }
 
-.bomb {
-    background-image: url('bomb.png');
-    filter: hue-rotate(180deg);
+.golden-mole i {
+    color: #FFD700;
+}
+
+.bomb i {
+    color: #000;
 }
 
 #start-button, .difficulty-btn, #play-again, .powerup-btn, #continue {
@@ -213,4 +218,26 @@ body {
         font-size: 14px;
         padding: 8px 12px;
     }
+}
+
+@keyframes shield-pulse {
+    0% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.7; }
+}
+
+.shield-active {
+    position: relative;
+}
+
+.shield-active::after {
+    content: '\f3ed';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 24px;
+    color: #4CAF50;
+    animation: shield-pulse 1s infinite;
 }

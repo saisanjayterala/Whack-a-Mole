@@ -6,6 +6,7 @@
     <title>Whack-a-Mole Deluxe</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="game-wrapper">
@@ -27,9 +28,10 @@
             <div class="mole-hole" data-index="8"><div class="dirt"></div></div>
         </div>
         <div id="powerups">
-            <button id="freeze-time" class="powerup-btn" disabled>Freeze Time (<span id="freeze-count">3</span>)</button>
-            <button id="double-points" class="powerup-btn" disabled>Double Points (<span id="double-count">3</span>)</button>
-            <button id="whack-all" class="powerup-btn" disabled>Whack All (<span id="whack-all-count">1</span>)</button>
+            <button id="freeze-time" class="powerup-btn" disabled><i class="fas fa-snowflake"></i> Freeze (<span id="freeze-count">3</span>)</button>
+            <button id="double-points" class="powerup-btn" disabled><i class="fas fa-coins"></i> Double (<span id="double-count">3</span>)</button>
+            <button id="whack-all" class="powerup-btn" disabled><i class="fas fa-hammer"></i> Whack All (<span id="whack-all-count">1</span>)</button>
+            <button id="shield" class="powerup-btn" disabled><i class="fas fa-shield-alt"></i> Shield (<span id="shield-count">2</span>)</button>
         </div>
         <button id="start-button">Start Game</button>
         <div id="difficulty">
