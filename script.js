@@ -3,14 +3,24 @@ const scoreElement = document.getElementById('score-value');
 const timeElement = document.getElementById('time-value');
 const highScoreElement = document.getElementById('high-score-value');
 const startButton = document.getElementById('start-button');
-const whackSound = document.getElementById('whack-sound');
-const backgroundMusic = document.getElementById('background-music');
+const difficultyButtons = document.querySelectorAll('.difficulty-btn');
+const gameOverModal = document.getElementById('game-over');
+const finalScoreElement = document.getElementById('final-score');
+const finalHighScoreElement = document.getElementById('final-high-score');
+const playAgainButton = document.getElementById('play-again');
 
 let score = 0;
 let highScore = 0;
 let timeLeft = 30;
 let gameInterval;
 let gameActive = false;
+let difficulty = 'medium';
+
+const difficultySettings = {
+    easy: { minPeepTime: 1000, maxPeepTime: 2000 },
+    medium: { minPeepTime: 500, maxPeepTime: 1500 },
+    hard: { minPeepTime: 300, maxPeepTime: 1000 }
+};
 
 function randomHole() {
     const index = Math.floor(Math.random() * holes.length);
@@ -20,12 +30,14 @@ function randomHole() {
 function peep() {
     const hole = randomHole();
     const mole = document.createElement('div');
-    mole.classList.add('mole');
+    mole.classList.add('mole', 'appear');
     hole.appendChild(mole);
 
     mole.addEventListener('click', whack);
 
-    const peepTime = Math.random() * 1000 + 500;
+    const { minPeepTime, maxPeepTime } = difficultySettings[difficulty];
+    const peepTime = Math.random() * (maxPeepTime - minPeepTime) + minPeepTime;
+    
     setTimeout(() => {
         hole.removeChild(mole);
         if (gameActive) peep();
@@ -35,9 +47,7 @@ function peep() {
 function whack(e) {
     score++;
     scoreElement.textContent = score;
-    e.target.style.transform = 'translateY(100%)';
-    whackSound.currentTime = 0;
-    whackSound.play();
+    e.target.classList.add('whacked');
     setTimeout(() => {
         e.target.remove();
     }, 100);
@@ -56,7 +66,7 @@ function startGame() {
     timeElement.textContent = timeLeft;
     gameActive = true;
     startButton.disabled = true;
-    backgroundMusic.play();
+    difficultyButtons.forEach(btn => btn.disabled = true);
     peep();
     gameInterval = setInterval(updateTime, 1000);
 }
@@ -65,16 +75,38 @@ function endGame() {
     gameActive = false;
     clearInterval(gameInterval);
     startButton.disabled = false;
-    backgroundMusic.pause();
-    backgroundMusic.currentTime = 0;
+    difficultyButtons.forEach(btn => btn.disabled = false);
     if (score > highScore) {
         highScore = score;
         highScoreElement.textContent = highScore;
     }
-    alert(`Game Over! Your score: ${score}`);
+    showGameOverModal();
+}
+
+function showGameOverModal() {
+    finalScoreElement.textContent = score;
+    finalHighScoreElement.textContent = highScore;
+    gameOverModal.style.display = 'block';
+}
+
+function hideGameOverModal() {
+    gameOverModal.style.display = 'none';
 }
 
 startButton.addEventListener('click', startGame);
+
+difficultyButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        difficulty = btn.dataset.difficulty;
+        difficultyButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    });
+});
+
+playAgainButton.addEventListener('click', () => {
+    hideGameOverModal();
+    startGame();
+});
 
 if (localStorage.getItem('whackAMoleHighScore')) {
     highScore = parseInt(localStorage.getItem('whackAMoleHighScore'));
