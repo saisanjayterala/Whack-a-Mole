@@ -63,7 +63,7 @@ body {
     border-radius: 0 0 50% 50%;
 }
 
-.mole, .golden-mole, .bomb {
+.mole, .golden-mole, .bomb, .power-mole {
     width: 80%;
     height: 80%;
     position: absolute;
@@ -88,6 +88,10 @@ body {
 
 .bomb i {
     color: #000;
+}
+
+.power-mole i {
+    color: #00FFFF;
 }
 
 #start-button, .difficulty-btn, #play-again, .powerup-btn, #continue {
@@ -240,4 +244,25 @@ body {
     font-size: 24px;
     color: #4CAF50;
     animation: shield-pulse 1s infinite;
+}
+
+#achievements {
+    margin-top: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+#achievement-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#achievement-list li {
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.slow-motion-active {
+    filter: sepia(100%) hue-rotate(190deg) saturate(500%);
 }
